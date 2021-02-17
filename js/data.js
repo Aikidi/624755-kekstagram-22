@@ -78,9 +78,10 @@ const createPhotoInfo = () => {
   return photoInfo;
 };
 
-const similarPhotosInfo = new Array(PHOTO_INFO_COUNT).fill(null).map(() => createPhotoInfo());
-//console.log(similarPhotosInfo);
+const createSimilarPhotosInfo = () => new Array(PHOTO_INFO_COUNT).fill(null).map(() => createPhotoInfo());
 
-//Строки временно добавлена, чтобы не ругался ESlint. Иначе выдает ошибку "ESLint: 'similarPhotosInfo' is assigned a value but never used. (no-unused-vars)"
-similarPhotosInfo;
+//Строка временно добавлена, чтобы не ругался ESlint. Иначе выдает ошибку "ESLint: 'isNormalLength' is assigned a value but never used. (no-unused-vars)"
+
 isNormalLength('test', 4);
+
+export {createSimilarPhotosInfo};
