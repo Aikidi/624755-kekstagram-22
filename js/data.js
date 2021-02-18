@@ -1,6 +1,6 @@
 import {getRandomIntInclusive, isNormalLength, createMixedArrayInRange} from './util.js';
 
-const PHOTO_INFO_COUNT = 10;
+const PHOTO_INFO_COUNT = 25;
 
 const AUTHORS = [
   'Василий',
