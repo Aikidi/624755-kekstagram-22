@@ -44,4 +44,18 @@ const createMixedArrayInRange = (min, max) => {
   return mixedArray;
 }
 
-export {getRandomIntInclusive, isNormalLength, createMixedArrayInRange};
+const removeAllChild = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
+const clearElementInner = (element) => {
+  element.innerHTML = '';
+};
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+export {getRandomIntInclusive, isNormalLength, createMixedArrayInRange, removeAllChild, isEscEvent, clearElementInner};

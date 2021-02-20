@@ -44,7 +44,7 @@ const createRandomText = (maxSentencesQuantity, sentencesArray) => {
 const createComment = () => {
   return {
     id: getRandomIntInclusive(0, PHOTO_INFO_COUNT * 2),
-    avatar: 'img/avatar-' + getRandomIntInclusive(0, 6) + '.svg',
+    avatar: 'img/avatar-' + getRandomIntInclusive(1, 6) + '.svg',
     message: createRandomText(2, MESSAGES),
     name: AUTHORS[getRandomIntInclusive(0, AUTHORS.length-1)],
   }
