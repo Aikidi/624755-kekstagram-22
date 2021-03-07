@@ -75,7 +75,7 @@ for (let i = 0; i < previewsList.length; i++) {
   onPreviewClick(previewsList[i], previewPictureElements[i]);
 }
 
-
+export {pageBody}
 
 
 
