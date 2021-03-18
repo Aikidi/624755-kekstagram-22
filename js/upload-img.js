@@ -1,5 +1,6 @@
 import {pageBody}  from './big-picture.js';
 import {isEscEvent} from './util.js';
+import {cancelCloseModal} from './valid-form.js';
 
 const uploadFileField = document.querySelector('#upload-file');
 const uploadFileCancel = document.querySelector('#upload-cancel');
@@ -16,7 +17,9 @@ const closeUploadModal = () => {
 const onUploadModalEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    closeUploadModal();
+    if (!cancelCloseModal) {
+      closeUploadModal();
+    }
   }
 };
 
