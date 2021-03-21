@@ -1,3 +1,4 @@
+/* global noUiSlider:readonly */
 import {imgUploadPreview} from './upload-img.js';
 const imgForEffect = imgUploadPreview.querySelector('img');
 const sliderElement = document.querySelector('.effect-level__slider');
