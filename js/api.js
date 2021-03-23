@@ -29,9 +29,6 @@ const sendDataOnServer = (onSuccess, onFail, formData) => {
         onFail('Не удалось отправить форму. Попробуйте ещё раз');
       }
     });
-    // .catch(() => {
-    //   onFail('Не удалось отправить форму. Попробуйте ещё раз');
-    // });
 };
 
 export {loadServerData, sendDataOnServer};

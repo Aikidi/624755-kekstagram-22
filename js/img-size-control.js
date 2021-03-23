@@ -21,7 +21,6 @@ scaleControlSmaller.addEventListener('click', () => {
 const setImageSize = (percent) => {
   scaleControlValue.value = percent + '%';
   imgUploadPreview.style.transform = 'scale('+percent / 100+')';
-  console.log(percent, scaleControlValue.value);
 }
 
 scaleControlBigger.addEventListener('click', () => {
