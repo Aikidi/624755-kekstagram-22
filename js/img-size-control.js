@@ -13,15 +13,24 @@ scaleControlSmaller.addEventListener('click', () => {
   if (imgSize < 25) {
     imgSize = minImgSize;
   }
-  scaleControlValue.value = imgSize + '%';
-  imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
+  setImageSize(imgSize);
+  // scaleControlValue.value = imgSize + '%';
+  // imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
 });
+
+const setImageSize = (percent) => {
+  scaleControlValue.value = percent + '%';
+  imgUploadPreview.style.transform = 'scale('+percent / 100+')';
+}
 
 scaleControlBigger.addEventListener('click', () => {
   imgSize += 25;
   if (imgSize > 100) {
     imgSize = maxImgSize;
   }
-  scaleControlValue.value = imgSize + '%';
-  imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
+  setImageSize(imgSize)
+  // scaleControlValue.value = imgSize + '%';
+  // imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
 });
+
+export {setImageSize};
