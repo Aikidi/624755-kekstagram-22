@@ -31,7 +31,7 @@ const MESSAGES = [
 
 const createRandomText = (maxSentencesQuantity, sentencesArray) => {
   let sentencesQuantity = getRandomIntInclusive(1, maxSentencesQuantity);
-  let text = '';
+  let text;
   text = sentencesArray[sentencesQuantity];
   if (sentencesQuantity > 1) {
     for (let i = 1; i < sentencesQuantity; i++) {
@@ -52,14 +52,14 @@ const createComment = () => {
 
 const createCommentsArr = (maxCommentsQuantity) => {
   let commentsQuantity = getRandomIntInclusive(1, maxCommentsQuantity);
-  let ccomments = [];
-  ccomments.push(createComment());
+  let comments = [];
+  comments.push(createComment());
   if (commentsQuantity > 1) {
     for (let i = 2; i <= commentsQuantity; i++) {
-      ccomments.push(createComment());
+      comments.push(createComment());
     }
   }
-  return ccomments;
+  return comments;
 }
 
 const idArr = createMixedArrayInRange(1, PHOTO_INFO_COUNT);
@@ -79,8 +79,6 @@ const createPhotoInfo = () => {
 };
 
 const createSimilarPhotosInfo = () => new Array(PHOTO_INFO_COUNT).fill(null).map(() => createPhotoInfo());
-
-//Строка временно добавлена, чтобы не ругался ESlint. Иначе выдает ошибку "ESLint: 'isNormalLength' is assigned a value but never used. (no-unused-vars)"
 
 isNormalLength('test', 4);
 

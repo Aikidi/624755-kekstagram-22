@@ -11,7 +11,6 @@ const bigPictureLikes = bigPictureModal.querySelector('.likes-count');
 const bigPictureCommentsCount = bigPictureModal.querySelector('.comments-count');
 const bigPictureCommentsList = bigPictureModal.querySelector('.social__comments');
 const bigPictureDescription = bigPictureModal.querySelector('.social__caption');
-const previewsList = document.querySelectorAll('.picture');
 
 const createNewComment = (commentInfo) => {
   const newComment = document.createElement('li');
@@ -32,7 +31,7 @@ const createNewComment = (commentInfo) => {
 const createBigPictureContent = (photoInfo) => {
   bigPictureImg.src = photoInfo.url;
   bigPictureLikes.textContent = photoInfo.likes;
-  bigPictureCommentsCount.textContent = photoInfo.comments.length;
+  bigPictureCommentsCount.textContent = photoInfo.comments.length.toString();
   bigPictureDescription.textContent = photoInfo.description;
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
@@ -71,11 +70,12 @@ const onPreviewClick = (preview, photoInfo) => {
   });
 };
 
-for (let i = 0; i < previewsList.length; i++) {
-  onPreviewClick(previewsList[i], previewPictureElements[i]);
+const setOnPreviewClick = () => {
+  const previewsList = document.querySelectorAll('.picture');
+  previewsList.forEach((previewItem) => { onPreviewClick(previewItem, previewPictureElements[previewItem.id]); })
 }
 
-export {pageBody}
+export {pageBody, setOnPreviewClick}
 
 
 

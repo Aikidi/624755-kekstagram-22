@@ -1,4 +1,5 @@
 const imgUploadForm = document.querySelector('.img-upload__form');
+const imgUploadSubmit = imgUploadForm.querySelector('.img-upload__submit');
 const imgUploadDescription = imgUploadForm.querySelector('.text__description');
 let cancelCloseModal = false;
 const imgUploadHashtags = imgUploadForm.querySelector('.text__hashtags');
@@ -23,6 +24,7 @@ imgUploadHashtags.addEventListener('blur', () => {
 export {cancelCloseModal};
 
 imgUploadHashtags.addEventListener('input', () => {
+  imgUploadHashtags.style.border = 'none';
   imgUploadHashtags.setCustomValidity('');
   imgUploadHashtags.value = imgUploadHashtags.value.replace(/ {2,}/g,' ');
   imgUploadHashtags.value = imgUploadHashtags.value.replace(/#{2,}/g,'#');
@@ -85,3 +87,16 @@ imgUploadHashtags.addEventListener('input', () => {
 
   imgUploadHashtags.reportValidity();
 });
+
+imgUploadSubmit.addEventListener('click', () => {
+  if (!imgUploadHashtags.checkValidity()) {
+    imgUploadHashtags.style.border = '5px solid red';
+  }
+})
+
+const clearUploadText = () => {
+  imgUploadHashtags.value = '';
+  imgUploadDescription.value = '';
+}
+
+export {clearUploadText};
