@@ -1,6 +1,8 @@
 /* global _:readonly */
 import {isEscEvent, clearElementInner} from './util.js';
 
+const OPEN_COMMENTS_DELAY = 300;
+
 const pageBody = document.querySelector('body');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -66,7 +68,7 @@ const showLoadMoreButton = () => {
   commentsLoadButton.classList.remove('hidden');
   const commentsCount = document.querySelector('.social__comment-count');
   commentsCount.classList.remove('hidden');
-  const debounceRender = _.debounce(() => openComments(), 300);
+  const debounceRender = _.debounce(() => openComments(), OPEN_COMMENTS_DELAY);
   commentsLoadButton.addEventListener('click', () => { debounceRender(); });
 }
 
