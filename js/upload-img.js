@@ -16,7 +16,9 @@ const showModalMessage = (messageType = 'success') => {
     document.removeEventListener('keydown', onModalMessageEscKeydown, true);
     document.removeEventListener('click', onOutOfMessageClick, true);
     document.removeEventListener('keydown', onCloseButtonClick, true);
-    document.querySelector('main').removeChild(modalMessageVariations[messageType]);
+    if (modalMessageVariations[messageType].parentNode) {
+      document.querySelector('main').removeChild(modalMessageVariations[messageType]);
+    }
   }
 
   const onCloseButtonClick = () => {
