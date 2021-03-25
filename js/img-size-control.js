@@ -1,36 +1,28 @@
-import {imgUploadPreview} from './upload-img.js';
+const MAX_IMG_SIZE = 100;
+const MIN_IMG_SIZE = 25;
+const START_IMG_SIZE = 100;
+const STEP_IMG_SIZE = 25;
 
-const scaleControlSmaller = document.querySelector('.scale__control--smaller');
-const scaleControlBigger = document.querySelector('.scale__control--bigger');
-let scaleControlValue = document.querySelector('.scale__control--value');
 let imgSize = 100;
-const maxImgSize = 100;
-const minImgSize = 25;
-scaleControlValue.value = maxImgSize + '%';
 
-scaleControlSmaller.addEventListener('click', () => {
-  imgSize -= 25;
-  if (imgSize < 25) {
-    imgSize = minImgSize;
-  }
-  setImageSize(imgSize);
-  // scaleControlValue.value = imgSize + '%';
-  // imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
-});
-
-const setImageSize = (percent) => {
-  scaleControlValue.value = percent + '%';
-  imgUploadPreview.style.transform = 'scale('+percent / 100+')';
+const setImageSize = (size) => {
+  imgSize = size;
+  document.querySelector('.scale__control--value').value = size + '%';
+  document.querySelector('.img-upload__preview').style.transform = 'scale('+size / 100+')';
 }
 
-scaleControlBigger.addEventListener('click', () => {
-  imgSize += 25;
-  if (imgSize > 100) {
-    imgSize = maxImgSize;
-  }
-  setImageSize(imgSize)
-  // scaleControlValue.value = imgSize + '%';
-  // imgUploadPreview.style.transform = 'scale('+imgSize / 100+')';
-});
+const initSizeButtons = (startSize = START_IMG_SIZE) => {
+  document.querySelector('.scale__control--smaller').addEventListener('click',() => { decreaseSize(); } );
+  document.querySelector('.scale__control--bigger').addEventListener('click',() => { increaseSize(); } );
+  setImageSize(startSize);
+}
 
-export {setImageSize};
+const decreaseSize = (step = STEP_IMG_SIZE) => {
+  setImageSize( imgSize < MIN_IMG_SIZE+1 ? imgSize = MIN_IMG_SIZE : imgSize - step);
+}
+
+const increaseSize = (step = STEP_IMG_SIZE) => {
+  setImageSize(imgSize > MAX_IMG_SIZE-1 ? imgSize = MAX_IMG_SIZE : imgSize + step);
+}
+
+export {setImageSize, initSizeButtons};

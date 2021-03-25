@@ -4,7 +4,6 @@ const loadServerData = new Promise((resolve, reject) => {
       if (response.ok) {
         return response.json();
       }
-
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((photos) => {

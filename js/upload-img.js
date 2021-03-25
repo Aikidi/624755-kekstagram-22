@@ -1,63 +1,57 @@
-import {pageBody}  from './big-picture.js';
 import {isEscEvent} from './util.js';
-import {cancelCloseModal} from './valid-form.js';
+import {isEscCloseEnable} from './valid-form.js';
 import {sendDataOnServer} from './api.js';
-import {setImageSize} from './img-size-control.js';
+import {setImageSize, initSizeButtons} from './img-size-control.js';
 import {clearUploadText} from './valid-form.js';
 import {initFilter} from './img-filter.js';
 
-const uploadFileField = document.querySelector('#upload-file');
-const uploadFileCancel = document.querySelector('#upload-cancel');
-const imgUploadModal = document.querySelector('.img-upload__overlay');
-const imgUploadPreview = document.querySelector('.img-upload__preview');
-const imgUploadForm = document.querySelector('.img-upload__form');
+const modalMessageVariations = {
+  'success' : document.querySelector('#success').content.querySelector('.success') ,
+  'error' : document.querySelector('#error').content.querySelector('.error') ,
+} ;
 
-const mainContent = document.querySelector('main');
+const showModalMessage = (messageType = 'success') => {
 
-const successMessageTemplate = document.querySelector('#success').content;
-const errorMessageTemplate = document.querySelector('#error').content;
+  const closeMessageModal = (messageType) => {
+    document.removeEventListener('keydown', onModalMessageEscKeydown, true);
+    document.removeEventListener('click', clickOutClose, true);
+    document.removeEventListener('keydown', buttonPushClose, true);
+    document.querySelector('main').removeChild(modalMessageVariations[messageType]);
+  }
 
-const successModalSection = successMessageTemplate.querySelector('.success');
-const errorModalSection = errorMessageTemplate.querySelector('.error');
+  const buttonPushClose = () => {
+    closeMessageModal(messageType);
+  }
 
-let modalSection = null;
-
-const closeMessageModal = (modalSectionClose) => {
-  mainContent.removeChild(modalSectionClose);
-  document.removeEventListener('keydown', onModalMessageEscKeydown);
-}
-
-const onModalMessageEscKeydown = (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    if (modalSection === 'error') {
-      document.querySelector('.error__button').click();
-    } else {
-      document.querySelector('.success__button').click();
+  const clickOutClose = (evt) => {
+    if ((!evt.target.classList.contains('success__inner'))
+      &&
+      (!evt.target.classList.contains('error__inner'))
+    &&
+      !modalMessageVariations[messageType].querySelector('.'+messageType+'__inner').contains(evt.target)) {
+      closeMessageModal(messageType);
     }
   }
-};
 
-const showSuccessMessage = () => {
-  mainContent.appendChild(successModalSection);
-  document.querySelector('.success__button').addEventListener('click', () => { closeMessageModal(successModalSection); });
-  document.addEventListener('keydown', onModalMessageEscKeydown);
-  modalSection = 'success';
-}
+  const onModalMessageEscKeydown = (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      closeMessageModal(messageType);
+    }
+  };
 
-const showErrorMessage = () => {
-  mainContent.appendChild(errorModalSection);
-  document.querySelector('.error__button').addEventListener('click', () => { closeMessageModal(errorModalSection); });
-  document.addEventListener('keydown', onModalMessageEscKeydown);
-  modalSection = 'error';
+  document.querySelector('main').appendChild(modalMessageVariations[messageType]);
+  document.querySelector('.'+messageType+'__button').addEventListener('click', buttonPushClose, true);
+  document.addEventListener('keydown',  onModalMessageEscKeydown, true);
+  document.addEventListener('click', clickOutClose, true);
 }
 
 const closeUploadModal = () => {
-  imgUploadModal.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
-  uploadFileField.value = '';
+  document.querySelector('.img-upload__overlay').classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
+  document.querySelector('#upload-file').value = '';
   setImageSize(100);
-  initFilter(imgUploadPreview);
+  initFilter(document.querySelector('.img-upload__preview'));
   clearUploadText();
   document.removeEventListener('keydown', onUploadModalEscKeydown);
 }
@@ -65,40 +59,38 @@ const closeUploadModal = () => {
 const onUploadModalEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    if (!cancelCloseModal) { closeUploadModal(); }
+    if (isEscCloseEnable()) { closeUploadModal(); }
   }
 };
 
 const setUserFormSubmit = () => {
-  imgUploadForm.addEventListener('submit', (evt) => {
+  document.querySelector('.img-upload__form').addEventListener('submit', (evt) => {
     evt.preventDefault();
     sendDataOnServer(
       () => {
-        showSuccessMessage();
         closeUploadModal();
+        showModalMessage();
       },
       () => {
-        showErrorMessage();
         closeUploadModal();
+        showModalMessage('error');
       },
       new FormData(evt.target),
     );
   });
 }
 
-uploadFileField.addEventListener('change', () => {
-  initFilter(imgUploadPreview);
-  imgUploadModal.classList.remove('hidden');
-  pageBody.classList.add('modal-open');
+const showUploadImage = () => {
+  document.querySelector('.img-upload__overlay').classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
   document.addEventListener('keydown', onUploadModalEscKeydown);
   setUserFormSubmit();
-  setImageSize(100);
+  document.querySelector('#upload-cancel').addEventListener('click', () => {
+    closeUploadModal();
+  });
+  initFilter(document.querySelector('.img-upload__preview'));
+  initSizeButtons();
+}
 
-});
-
-uploadFileCancel.addEventListener('click', () => {
-  closeUploadModal();
-});
-
-export {imgUploadPreview, closeUploadModal};
+export {closeUploadModal, showUploadImage};
 

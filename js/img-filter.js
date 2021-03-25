@@ -7,10 +7,10 @@ const initFilter = (imgUploadPreviewElement) => {
   const sliderElement = document.querySelector('.effect-level__slider');
   const valueElement = document.querySelector('.effect-level__value');
   valueElement.step = 0.1;
-  const Effects = document.querySelectorAll('.effects__radio');
+  const effectsButtons = document.querySelectorAll('.effects__radio');
   imgForEffect.classList.add(setEffect);
   let effectValue;
-  let Effect = 'none';
+  let effect = 'none';
   let sliderDisplay = 'none';
   let sliderOptions = {
     range: {
@@ -25,9 +25,9 @@ const initFilter = (imgUploadPreviewElement) => {
   if (!sliderElement.noUiSlider) {
     noUiSlider.create(sliderElement, sliderOptions);
 
-    Effects.forEach((EffectOneItem) => {
-      EffectOneItem.addEventListener('click' , function () {
-        let chosenEffect = EffectOneItem.value;
+    effectsButtons.forEach((effectOneItem) => {
+      effectOneItem.addEventListener('click' , function () {
+        let chosenEffect = effectOneItem.value;
         let newClass = 'effects__preview--' + chosenEffect;
         imgForEffect.classList.remove(setEffect);
         imgForEffect.classList.add(newClass);
@@ -35,7 +35,7 @@ const initFilter = (imgUploadPreviewElement) => {
 
         switch (chosenEffect) {
           case 'chrome':
-            Effect = 'grayscale';
+            effect = 'grayscale';
             sliderOptions = {
               range: {
                 min: 0,
@@ -47,7 +47,7 @@ const initFilter = (imgUploadPreviewElement) => {
             break;
 
           case 'sepia':
-            Effect = 'sepia';
+            effect = 'sepia';
             sliderOptions = {
               range: {
                 min: 0,
@@ -59,7 +59,7 @@ const initFilter = (imgUploadPreviewElement) => {
             break;
 
           case 'marvin':
-            Effect = 'invert';
+            effect = 'invert';
             sliderOptions = {
               range: {
                 min: 0,
@@ -71,7 +71,7 @@ const initFilter = (imgUploadPreviewElement) => {
             break;
 
           case 'phobos':
-            Effect = 'blur';
+            effect = 'blur';
             sliderOptions = {
               range: {
                 min: 1,
@@ -83,7 +83,7 @@ const initFilter = (imgUploadPreviewElement) => {
             break;
 
           case 'heat':
-            Effect = 'brightness';
+            effect = 'brightness';
             sliderOptions = {
               range: {
                 min: 1,
@@ -96,7 +96,7 @@ const initFilter = (imgUploadPreviewElement) => {
         }
 
         if (chosenEffect === 'none') {
-          Effect = 'none';
+          effect = 'none';
           sliderDisplay = 'none';
           imgUploadPreviewElement.style.filter = 'none';
           sliderElement.style.display = sliderDisplay;
@@ -105,7 +105,7 @@ const initFilter = (imgUploadPreviewElement) => {
           sliderElement.noUiSlider.updateOptions(sliderOptions);
           sliderElement.noUiSlider.set(sliderOptions.start);
         }
-        imgUploadPreviewElement.name = Effect;
+        imgUploadPreviewElement.name = effect;
 
       });
     });

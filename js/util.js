@@ -22,10 +22,6 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const isNormalLength = (string, maxLength) => {
-  return (string.length <= maxLength); // ? true : false;
-}
-
 const createArray = (min, max) => {
   let newArr = [];
   for (let i = min; i <= max; i++) {
@@ -42,15 +38,8 @@ const createMixedArrayInRange = (min, max) => {
     mixedArray.push(rangeArr[uniqueInt]);
     rangeArr.splice(uniqueInt, 1);
   }
-
   return mixedArray;
 }
-
-const removeAllChild = (element) => {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-};
 
 const clearElementInner = (element) => {
   element.innerHTML = '';
@@ -71,18 +60,14 @@ const showAlert = (message) => {
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
   alertContainer.style.backgroundColor = 'red';
-
   alertContainer.textContent = message;
-
   document.body.append(alertContainer);
-
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
 }
 
-
-export {getRandomIntInclusive, isNormalLength, createMixedArrayInRange, removeAllChild, isEscEvent, clearElementInner, showAlert};
+export {getRandomIntInclusive, createMixedArrayInRange, isEscEvent, clearElementInner, showAlert};
 
 
 
