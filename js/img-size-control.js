@@ -18,11 +18,11 @@ const initSizeButtons = (startSize = START_IMG_SIZE) => {
 }
 
 const decreaseSize = (step = STEP_IMG_SIZE) => {
-  setImageSize( imgSize < MIN_IMG_SIZE+1 ? imgSize = MIN_IMG_SIZE : imgSize - step);
+  setImageSize( imgSize < MIN_IMG_SIZE+1 ? MIN_IMG_SIZE : imgSize - step);
 }
 
 const increaseSize = (step = STEP_IMG_SIZE) => {
-  setImageSize(imgSize > MAX_IMG_SIZE-1 ? imgSize = MAX_IMG_SIZE : imgSize + step);
+  setImageSize(imgSize > MAX_IMG_SIZE-1 ? MAX_IMG_SIZE : imgSize + step);
 }
 
 export {setImageSize, initSizeButtons};
