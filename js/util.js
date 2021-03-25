@@ -23,22 +23,22 @@ const getRandomIntInclusive = (min, max) => {
 }
 
 const createArray = (min, max) => {
-  let newArr = [];
+  let elements = [];
   for (let i = min; i <= max; i++) {
-    newArr.push(i);
+    elements.push(i);
   }
-  return newArr;
+  return elements;
 }
 
 const createMixedArrayInRange = (min, max) => {
-  let rangeArr = createArray(min, max);
-  let mixedArray = [];
-  while (rangeArr.length > 0) {
-    let uniqueInt = getRandomIntInclusive(0, rangeArr.length-1);
-    mixedArray.push(rangeArr[uniqueInt]);
-    rangeArr.splice(uniqueInt, 1);
+  let elementsInRange = createArray(min, max);
+  let mixedElements = [];
+  while (elementsInRange.length > 0) {
+    let uniqueInt = getRandomIntInclusive(0, elementsInRange.length-1);
+    mixedElements.push(elementsInRange[uniqueInt]);
+    elementsInRange.splice(uniqueInt, 1);
   }
-  return mixedArray;
+  return mixedElements;
 }
 
 const clearElementInner = (element) => {

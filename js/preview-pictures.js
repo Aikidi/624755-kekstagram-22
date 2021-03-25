@@ -25,10 +25,10 @@ const initSortMode = () => {
   });
 }
 
-const renderImages = (previewArray) => new Promise((resolve) => {
+const renderImages = (imagesForRender) => new Promise((resolve) => {
   const previewPictureTemplate = document.querySelector('#picture').content;
   const previewPictureListFragment = document.createDocumentFragment();
-  previewArray.forEach((picture) => {
+  imagesForRender.forEach((picture) => {
     const previewPictureOneElement = previewPictureTemplate.cloneNode(true);
     previewPictureOneElement.querySelector('.picture').id = picture.id;
     previewPictureOneElement.querySelector('.picture__likes').textContent = picture.likes;
@@ -43,7 +43,7 @@ const renderImages = (previewArray) => new Promise((resolve) => {
   previewPictureListContainer.appendChild(previewPictureListFragment);
   previewPictureListContainer.querySelector('#upload-file').addEventListener( 'change', () => { showUploadImage();  });
   initValidator();
-  resolve(previewArray);
+  resolve(imagesForRender);
 });
 
 export {initSortMode, renderImages};
