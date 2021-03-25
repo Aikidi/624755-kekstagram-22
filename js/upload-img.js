@@ -14,16 +14,16 @@ const showModalMessage = (messageType = 'success') => {
 
   const closeMessageModal = (messageType) => {
     document.removeEventListener('keydown', onModalMessageEscKeydown, true);
-    document.removeEventListener('click', clickOutClose, true);
-    document.removeEventListener('keydown', buttonPushClose, true);
+    document.removeEventListener('click', onOutOfMessageClick, true);
+    document.removeEventListener('keydown', onCloseButtonClick, true);
     document.querySelector('main').removeChild(modalMessageVariations[messageType]);
   }
 
-  const buttonPushClose = () => {
+  const onCloseButtonClick = () => {
     closeMessageModal(messageType);
   }
 
-  const clickOutClose = (evt) => {
+  const onOutOfMessageClick = (evt) => {
     if ((!evt.target.classList.contains('success__inner'))
       &&
       (!evt.target.classList.contains('error__inner'))
@@ -41,9 +41,9 @@ const showModalMessage = (messageType = 'success') => {
   };
 
   document.querySelector('main').appendChild(modalMessageVariations[messageType]);
-  document.querySelector('.'+messageType+'__button').addEventListener('click', buttonPushClose, true);
+  document.querySelector('.'+messageType+'__button').addEventListener('click', onCloseButtonClick, true);
   document.addEventListener('keydown',  onModalMessageEscKeydown, true);
-  document.addEventListener('click', clickOutClose, true);
+  document.addEventListener('click', onOutOfMessageClick, true);
 }
 
 const closeUploadModal = () => {
