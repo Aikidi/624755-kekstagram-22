@@ -69,7 +69,7 @@ const initValidator = (imgUploadForm = document.querySelector('.img-upload__form
   let PreviousInputHashtags = '';
   const imgUploadHashtags = imgUploadForm.querySelector('.text__hashtags');
 
-  initFocusHandler(imgUploadForm) ;
+  initFocusHandler(imgUploadForm);
 
   imgUploadForm.querySelector('.img-upload__submit').addEventListener('click', () => {
     if (!imgUploadHashtags.checkValidity()) { imgUploadHashtags.style.border = '5px solid red'; }

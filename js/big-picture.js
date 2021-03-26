@@ -5,7 +5,6 @@ const OPEN_COMMENTS_DELAY = 300;
 
 const pageBody = document.querySelector('body');
 const socialCommentCount = document.querySelector('.social__comment-count');
-const commentsLoader = document.querySelector('.comments-loader');
 const bigPictureModal = document.querySelector('.big-picture');
 const bigPictureImg = bigPictureModal.querySelector('img');
 const bigPictureLikes = bigPictureModal.querySelector('.likes-count');
@@ -95,7 +94,7 @@ const showBigPicture = (imageInfo) => {
   bigPictureCommentsCount.textContent = imageInfo.comments.length.toString();
   bigPictureDescription.textContent = imageInfo.description;
   socialCommentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  document.querySelector('.comments-loader').classList.add('hidden');
   createNewCommentPack(imageInfo.comments);
   if (imageInfo.comments.length>5) {
     showLoadMoreButton();

@@ -7,7 +7,7 @@ import {initValidator} from './valid-form.js';
 const RERENDER_DELAY = 500;
 
 const previewPictureListContainer = document.querySelector('.pictures');
-const defaultPictureListContainerInnerHtml = previewPictureListContainer.innerHTML ;
+const defaultPictureListContainerInnerHtml = previewPictureListContainer.innerHTML;
 
 const onModeButtonClick = (buttonID) => {
   document.querySelectorAll('.img-filters__button').forEach((filterButton) => {

@@ -2,9 +2,9 @@
 import {initSizeButtons} from './img-size-control.js';
 
 const initSliderOptions = (allElements = true) => {
-  const sliderOptionsList = [];
+  const sliderOptions = [];
 
-  sliderOptionsList['none'] = {
+  sliderOptions['none'] = {
     effect : 'none',
     sliderOptions : {
       range: {
@@ -17,67 +17,67 @@ const initSliderOptions = (allElements = true) => {
     },
   };
 
-  sliderOptionsList['chrome'] = {
+  sliderOptions['chrome'] = {
     effect : 'grayscale',
     sliderOptions : {
       range: {
         min: 0,
         max: 1,
       },
-      start: 0,
+      start: 1,
       step: 0.1,
     },
   };
 
-  sliderOptionsList['sepia'] = {
+  sliderOptions['sepia'] = {
     effect : 'sepia',
     sliderOptions : {
       range: {
         min: 0,
         max: 1,
       },
-      start: 0,
+      start: 1,
       step: 0.1,
     },
   };
 
-  sliderOptionsList['marvin'] = {
+  sliderOptions['marvin'] = {
     effect : 'invert',
     sliderOptions : {
       range: {
         min: 0,
         max: 100,
       },
-      start: 0,
+      start: 100,
       step: 1,
     },
   };
 
-  sliderOptionsList['phobos'] = {
+  sliderOptions['phobos'] = {
     effect : 'blur',
     sliderOptions : {
       range: {
         min: 0,
         max: 3,
       },
-      start: 0,
+      start: 3,
       step: 0.1,
     },
   };
 
-  sliderOptionsList['heat'] = {
+  sliderOptions['heat'] = {
     effect : 'brightness',
     sliderOptions : {
       range: {
         min: 1,
         max: 3,
       },
-      start: 1,
+      start: 3,
       step: 0.1,
     },
   };
 
-  return allElements ? sliderOptionsList : sliderOptionsList[allElements];
+  return allElements ? sliderOptions : sliderOptions[allElements];
 }
 
 const getRightUnits = (currentEffect) => {
@@ -105,10 +105,10 @@ const resetFilter = (imgUploadPreviewElementForReset = document.querySelector('.
 
 const initFilter = (imgUploadPreviewElement = document.querySelector('.img-upload__preview')) => {
   const sliderElement = document.querySelector('.effect-level__slider');
-  const sliderOptionsList = initSliderOptions();
+  const sliderOptions = initSliderOptions();
   resetFilter();
   if (!sliderElement.noUiSlider) {
-    noUiSlider.create(sliderElement, sliderOptionsList['none'].sliderOptions);
+    noUiSlider.create(sliderElement, sliderOptions['none'].sliderOptions);
   }
 
   const onSelectEffectButtonClick = (evt) => {
@@ -119,12 +119,12 @@ const initFilter = (imgUploadPreviewElement = document.querySelector('.img-uploa
     } else {
       document.querySelector('.img-upload__effect-level').style.display = 'block';
     }
-    sliderElement.noUiSlider.updateOptions(sliderOptionsList[evt.target.value].sliderOptions);
-    sliderElement.noUiSlider.set(sliderOptionsList[evt.target.value].sliderOptions.start);
-    imgUploadPreviewElement.name = sliderOptionsList[evt.target.value].effect;
+    sliderElement.noUiSlider.updateOptions(sliderOptions[evt.target.value].sliderOptions);
+    sliderElement.noUiSlider.set(sliderOptions[evt.target.value].sliderOptions.start);
+    imgUploadPreviewElement.name = sliderOptions[evt.target.value].effect;
     imgUploadPreviewElement.querySelector('img').style.filter= getRightFilterString(
-      sliderOptionsList[evt.target.value].sliderOptions.start,
-      sliderOptionsList[evt.target.value].effect);
+      sliderOptions[evt.target.value].sliderOptions.start,
+      sliderOptions[evt.target.value].effect);
   }
   document.querySelectorAll('.effects__radio').forEach((effectOneItem) => {
     effectOneItem.removeEventListener('click' , onSelectEffectButtonClick,true );
