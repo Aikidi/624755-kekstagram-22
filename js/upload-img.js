@@ -1,7 +1,6 @@
 import {isEscEvent} from './util.js';
 import {isEscCloseEnable} from './valid-form.js';
 import {sendDataOnServer} from './api.js';
-import {setImageSize, initSizeButtons, removeSizeButtonListener} from './img-size-control.js';
 import {clearUploadText} from './valid-form.js';
 import {initFilter} from './img-filter.js';
 
@@ -48,17 +47,6 @@ const showModalMessage = (messageType = 'success') => {
   document.addEventListener('click', onOutOfMessageClick, true);
 }
 
-const closeUploadModal = () => {
-  document.querySelector('.img-upload__overlay').classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
-  document.querySelector('#upload-file').value = '';
-  setImageSize(100);
-  initFilter(document.querySelector('.img-upload__preview'));
-  clearUploadText();
-  document.removeEventListener('keydown', onUploadModalEscKeydown);
-  removeSizeButtonListener();
-}
-
 const onUploadModalEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
@@ -66,33 +54,42 @@ const onUploadModalEscKeydown = (evt) => {
   }
 };
 
-const setUserFormSubmit = () => {
-  document.querySelector('.img-upload__form').addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    sendDataOnServer(
-      () => {
-        closeUploadModal();
-        showModalMessage();
-      },
-      () => {
-        closeUploadModal();
-        showModalMessage('error');
-      },
-      new FormData(evt.target),
-    );
-  });
+const onSubmitButtonClick =(evt) => {
+  evt.preventDefault();
+  sendDataOnServer(
+    () => {
+      closeUploadModal();
+      showModalMessage();
+    },
+    () => {
+      closeUploadModal();
+      showModalMessage('error');
+    },
+    new FormData(evt.target),
+  );
+}
+
+const onUploadModalCloseButtonClick = () => {
+  closeUploadModal();
+}
+
+const closeUploadModal = () => {
+  clearUploadText();
+  document.querySelector('#upload-file').value = '';
+  document.querySelector('.img-upload__form').removeEventListener('submit', onSubmitButtonClick, true);
+  document.querySelector('#upload-cancel').removeEventListener('click', onUploadModalCloseButtonClick, true);
+  document.removeEventListener('keydown', onUploadModalEscKeydown, true);
+  document.querySelector('.img-upload__overlay').classList.add('hidden');
+  document.querySelector('body').classList.remove('modal-open');
 }
 
 const showUploadImage = () => {
   document.querySelector('.img-upload__overlay').classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
-  document.addEventListener('keydown', onUploadModalEscKeydown);
-  setUserFormSubmit();
-  document.querySelector('#upload-cancel').addEventListener('click', () => {
-    closeUploadModal();
-  });
-  initFilter(document.querySelector('.img-upload__preview'));
-  initSizeButtons();
+  document.addEventListener('keydown', onUploadModalEscKeydown, true);
+  document.querySelector('.img-upload__form').addEventListener('submit', onSubmitButtonClick, true);
+  document.querySelector('#upload-cancel').addEventListener('click', onUploadModalCloseButtonClick, true);
+  initFilter();
 }
 
 export {closeUploadModal, showUploadImage};

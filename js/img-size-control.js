@@ -20,6 +20,7 @@ const increaseSize = () => {
 }
 
 const initSizeButtons = (startSize = START_IMG_SIZE) => {
+  removeSizeButtonListener();
   document.querySelector('.scale__control--bigger').addEventListener('click',increaseSize, true );
   document.querySelector('.scale__control--smaller').addEventListener('click', decreaseSize, true );
   setImageSize(startSize);

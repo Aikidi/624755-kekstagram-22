@@ -87,6 +87,8 @@ const initValidator = (imgUploadForm = document.querySelector('.img-upload__form
 }
 
 const clearUploadText = () => {
+  document.querySelector('.img-upload__form .text__hashtags').setCustomValidity('');
+  document.querySelector('.img-upload__form .text__hashtags').style.border = 'none';
   document.querySelector('.img-upload__form').querySelector('.text__hashtags').value = '';
   document.querySelector('.img-upload__form').querySelector('.text__description').value = '';
 }
