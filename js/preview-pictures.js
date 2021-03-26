@@ -9,20 +9,21 @@ const RERENDER_DELAY = 500;
 const previewPictureListContainer = document.querySelector('.pictures');
 const defaultPictureListContainerInnerHtml = previewPictureListContainer.innerHTML ;
 
-const initSortMode = () => {
-  const imgFilters = document.querySelector('.img-filters');
-  const imgFilterButtons = document.querySelectorAll('.img-filters__button');
-  imgFilters.classList.remove('img-filters--inactive');
-  imgFilterButtons.forEach((filterButton) => {
-
-    const debounceRender = _.debounce(() => renderImages(changeViewMode(filterButton.id)), RERENDER_DELAY);
-    filterButton.addEventListener('click', () => {
-      const chosenFilterButton = document.querySelector('#' + filterButton.id);
-      imgFilterButtons.forEach((filterButton) => { filterButton.classList.remove('img-filters__button--active'); });
-      chosenFilterButton.classList.add('img-filters__button--active');
-      debounceRender();
-    })
+const onModeButtonClick = (buttonID) => {
+  document.querySelectorAll('.img-filters__button').forEach((filterButton) => {
+    filterButton.classList.remove('img-filters__button--active');
   });
+  document.querySelector('#' + buttonID).classList.add('img-filters__button--active');
+  renderImages(changeViewMode(buttonID));
+}
+
+const debounceRender = _.debounce((buttonID) => onModeButtonClick(buttonID), RERENDER_DELAY);
+
+const initSortMode = () => {
+  document.querySelectorAll('.img-filters__button').forEach((filterButton) => {
+    filterButton.addEventListener('click', () => { debounceRender(filterButton.id); });
+  });
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 }
 
 const renderImages = (imagesForRender) => new Promise((resolve) => {
@@ -41,10 +42,11 @@ const renderImages = (imagesForRender) => new Promise((resolve) => {
   })
   previewPictureListContainer.innerHTML = defaultPictureListContainerInnerHtml;
   previewPictureListContainer.appendChild(previewPictureListFragment);
-  previewPictureListContainer.querySelector('#upload-file').addEventListener( 'change', () => { showUploadImage();  });
+  previewPictureListContainer.querySelector('#upload-file').addEventListener( 'change', () => {
+    showUploadImage();
+  });
   initValidator();
   resolve(imagesForRender);
 });
 
 export {initSortMode, renderImages};
-

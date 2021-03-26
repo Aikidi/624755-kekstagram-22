@@ -1,7 +1,7 @@
 import {isEscEvent} from './util.js';
 import {isEscCloseEnable} from './valid-form.js';
 import {sendDataOnServer} from './api.js';
-import {setImageSize, initSizeButtons} from './img-size-control.js';
+import {setImageSize, initSizeButtons, removeSizeButtonListener} from './img-size-control.js';
 import {clearUploadText} from './valid-form.js';
 import {initFilter} from './img-filter.js';
 
@@ -29,7 +29,7 @@ const showModalMessage = (messageType = 'success') => {
     if ((!evt.target.classList.contains('success__inner'))
       &&
       (!evt.target.classList.contains('error__inner'))
-    &&
+      &&
       !modalMessageVariations[messageType].querySelector('.'+messageType+'__inner').contains(evt.target)) {
       closeMessageModal(messageType);
     }
@@ -56,6 +56,7 @@ const closeUploadModal = () => {
   initFilter(document.querySelector('.img-upload__preview'));
   clearUploadText();
   document.removeEventListener('keydown', onUploadModalEscKeydown);
+  removeSizeButtonListener();
 }
 
 const onUploadModalEscKeydown = (evt) => {
